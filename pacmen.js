@@ -4,6 +4,8 @@ const pacArray = [
   ["PacMan3.png", "PacMan4.png"],
 ];
 
+// var direction = 0;
+// var focus = 0;
 const pacMen = []; // This array holds all the pacmen
 
 function setToRandom(scale) {
@@ -17,8 +19,11 @@ function makePac() {
   // returns an object with random values scaled {x: 33, y: 21}
   let velocity = setToRandom(10); // {x:?, y:?}
   let position = setToRandom(200);
-  let direction = parseInt(Math.random(2)); //direction image is facing
-  let focus = parseInt(Math.random(2)); //mouth open or closed
+  let direction = parseInt(Math.random()*2); //direction image is facing
+  let focus = parseInt(Math.random()*2); //mouth open or closed
+  if(direction === 1){
+    velocity.x = -velocity.x;
+  }
   
   // Add image to div id = game
   let game = document.getElementById("game");
@@ -38,6 +43,8 @@ function makePac() {
     position,
     velocity,
     newimg,
+    direction,
+    focus
   };
 }
 
@@ -45,13 +52,17 @@ function update() {
   //loop over pacmen array and move each one and move image in DOM
   pacMen.forEach((item) => {
     checkCollisions(item);
+    item.focus = (item.focus + 1) % 2;
+    item.newimg.src = pacArray[item.direction][item.focus];
+
+
     item.position.x += item.velocity.x;
     item.position.y += item.velocity.y;
 
     item.newimg.style.left = item.position.x;
     item.newimg.style.top = item.position.y;
 
-    item.focus = (item.focus + 1) % 2;
+    
   });
   setTimeout(update, 20);
 }
@@ -72,7 +83,6 @@ function checkCollisions(item) {
     item.position.y + item.velocity.y <= 0
   ) {
     item.velocity.y = -item.velocity.y;
-    item.direction = (item.direction + 1) % 2;
   }
   //
 }
