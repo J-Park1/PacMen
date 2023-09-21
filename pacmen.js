@@ -64,7 +64,7 @@ function update() {
 
     
   });
-  setTimeout(update, 20);
+  setTimeout(update, 50);
 }
 
 function checkCollisions(item) {
