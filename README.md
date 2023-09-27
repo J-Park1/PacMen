@@ -14,3 +14,4 @@ Download the files. Open the index.html file in a browser. Add a PacMan by click
 </ul>
 
 ## License
+<link href="license.>
